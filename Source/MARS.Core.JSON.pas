@@ -426,6 +426,13 @@ var
   LElement: TJSONValue;
   LIndex: Integer;
 begin
+  if not Assigned(AJSONArray) then
+  begin
+    Result := [];
+    Exit;
+  end;
+
+
   SetLength(Result, AJSONArray.Count);
 
   for LIndex := 0 to AJSONArray.Count-1 do
@@ -1173,7 +1180,7 @@ begin
 {$else}
   LPair := Get(AName);
 {$endif}
-  if Assigned(LPair) then
+  if Assigned(LPair) and (not (LPair.JsonValue is TJSONNull)) then
     Result := LPair.JsonValue.Value;
 end;
 
